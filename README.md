@@ -53,6 +53,18 @@ On calcule donc l'attractivité de toutes les villes restantes, et on cherche ce
 Cette opération semble nécessaire afin de trouver de nouvelles routes qui peuvent potentiellement être meilleures.
 - ```add_pheromone(self)``` calcule la quantité de phéromone que la fourmi doit déposer sur chaque branche en fonction de la distance totale parcourue. On remet alors la pheromone_map de la fourmi à zéro pour ensuite l'instancier avec la nouvelle quantité de phéromone.
 
+### Classe colony
+La classe colony est la classe principale qui met en commun les données de chaque fourmi pour s'occuper de la colonie dans sa globalité. Elle a 3 paramètres en entrée:
+- **colony_size** qui est le nombre de fourmis souhaité dans la colonie.
+- **nb_iterations** qui est le nombre de tours à faire par fourmi.
+- **rho**, le coefficient d'évaporation des phéromones.
+
+Elle comporte 8 fonctions:
+- ```_init_ants(self)``` qui appelle la classe ant pour initialiser autant de fourmis que la taille de la colonie.
+- ```_init_matrix_(self, len_map, value=0.0)``` qui est la même fonction que celle de la classe ant. On aurait pu écrire cette fonction en dehors des classes.
+- ```
+
+
 
 
 
