@@ -62,7 +62,16 @@ La classe colony est la classe principale qui met en commun les données de chaq
 Elle comporte 8 fonctions:
 - ```_init_ants(self)``` qui appelle la classe ant pour initialiser autant de fourmis que la taille de la colonie.
 - ```_init_matrix_(self, len_map, value=0.0)``` qui est la même fonction que celle de la classe ant. On aurait pu écrire cette fonction en dehors des classes.
-- ```
+- ```_init_global_distance(self)``` initialise la variable **self.global_distance** qui est la distance la plus courte sur tous les tours.
+- ```update_pheromone_map(self)``` met à jour la pheromone_map de la colonie en lui ajoutant la moyenne des pheromone_map de toutes les fourmis après avoir appliqué le coefficiemt d'évaporation à la pheromone_map actuelle.
+- ```shortest_route(self)``` retourne le chemin le plus court ainsi que la distance associée sur un tour.
+- ```global_shortest(self)``` met à jour **self.global_distance** en cherchant le chemin le plus court sur toute la simulation.
+- ```distance(self, a, b)``` est la même fonction que celle de la classe ant. On aurait donc pu l'écrire en dehors des classes.
+- ```mainloop(self)``` est la boucle principale.
+
+
+### Résultat
+Pour mieux afficher le chemin le plus court trouvé par les colonies, j'ai ajouté une visualisation sur pygame.
 
 
 
