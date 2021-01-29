@@ -68,6 +68,11 @@ class colony:
             for i in range(len(_CITIES)):
                 for j in range(len(_CITIES)):
                     cumul_pheromone[i][j] += ant.pheromone_map[i][j]
+        
+        # do the mean
+        for i in range(len(_CITIES)):
+            for j in range(len(_CITIES)):
+                cumul_pheromone[i][j] /= self.colony_size
                     
         pheromone_amount = self._init_matrix_(len(_CITIES))
         for i in range(len(_CITIES)):
