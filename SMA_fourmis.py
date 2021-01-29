@@ -77,7 +77,7 @@ class colony:
         pheromone_amount = self._init_matrix_(len(_CITIES))
         for i in range(len(_CITIES)):
             for j in range(len(_CITIES)):
-                pheromone_amount[i][j] = self.pheromone_map[i][j]
+                pheromone_amount[i][j] = self.pheromone_map[i][j] / self.colony_size
                 self.pheromone_map[i][j] = self.rho*pheromone_amount[i][j] + cumul_pheromone[i][j]
     
     
