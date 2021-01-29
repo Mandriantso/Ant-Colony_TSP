@@ -12,8 +12,46 @@ La classe ant est en fait une sous-classe de la classe colony. Il s'agit de la c
 
 Les différentes fonctions implémentées dans cette classe sont:
 - ```_init_matrix_(self, len_map, value=0.0)``` qui permet de créer une matrice de zéros. Elle est utilisée pour remettre à zéro la pheromone_map de la fourmi une fois qu'elle a fini son tour afin d'ajouter ces valeurs à la pheromone_map globale de la colonie.
-
-
+- ```distance(self, a, b)``` qui retourne la distance entre deux villes. Cette fonction est utilisée au premier tour pour choisir la prochaine ville à visiter en fonction de sa proximité. Elle est aussi utilisée pour ajouter des valeurs dans le tableau **self.distance_map** afin de calculer la distance totale parcourue par la fourmi à la fin de son tour.
+- ```city_choice_by_proximity(self)``` qui parcours le tableau **self.possible_cities** - tableau contenant toutes les villes qui n'ont pas encore été visitées - pour essayer de trouver la ville la plus proche de la ville dans laquelle la fourmi se trouve (**self.actual_city**). Les tableaux **self.visited_cities** - tableau contenant la liste des villes visitées - , **self.possible_cities** et **self.distance_map** sont mis à jour à la fin de la fonction.
+```python
+        def city_choice_by_proximity(self):
+            
+            next_city = self.possible_cities[0]
+            for city in self.possible_cities:
+                distance_1 = self.distance(self.actual_city[1], city[1])
+                distance_2 = self.distance(self.actual_city[1], next_city[1])
+                shortest_distance = min(distance_1, distance_2)
+                if(shortest_distance==distance_1):
+                    next_city = city
+            
+            self.visited_cities.append(next_city)
+            self.distance_map.append(self.distance(self.actual_city[1], next_city[1]))
+            self.possible_cities.remove(next_city)
+            
+            return next_city
+```
+- ```city_choice_by_pheromone(self)```. Cette fonction calcule l'attractivité d'une ville en fonction de la quantité de phéromone déposée entre cette ville et la ville actuelle. L'attractivité de la ville est déterminée par l'équation:
+```python
+new_attractiveness = self.gamma + (pheromone_amount**self.alpha)*((1/self.distance(self.actual_city[1],city[1]))**self.beta)
+```
+où gamma est un facteur permettant de trouver de nouvelles routes/branches.  
+On calcule donc l'attractivité de toutes les villes restantes, et on cherche celle qui est la plus attractive.
+- ```city_choice(self)``` est la fonction principale pour choisir la prochaine ville. Elle appelle la fonction ```city_choice_by_proximity(self)``` s'il s'agit du premier tour et ```city_choice_by_pheromone(self)``` sinon. On fait ensuite une modification génétique en choisissant une ville aléatoirement dans les villes qui n'ont pas encore été visitées. Si la distance entre la ville choisie aléatoirement et la ville actuelle est inférieure à la distance entre la ville choisie avec l'une des deux fonctions citées précédemment et la ville actuelle, alors la ville choisie aléatoirement devient la prochaine destination.
+```python
+                if len(self.possible_cities)>1:
+                    random_city = self.possible_cities[randint(0, len(self.possible_cities)-1)]
+                    if self.distance(self.actual_city[1], next_city[1])>self.distance(self.actual_city[1], random_city[1]):
+                        self.possible_cities.append(next_city)
+                        self.visited_cities.remove(next_city)
+                        self.distance_map.remove(self.distance(self.actual_city[1], next_city[1]))
+                        
+                        self.possible_cities.remove(random_city)
+                        self.visited_cities.append(random_city)
+                        self.distance_map.append(self.distance(self.actual_city[1], random_city[1]))
+```
+Cette opération semble nécessaire afin de trouver de nouvelles routes qui peuvent potentiellement être meilleures.
+- ```add_pheromone(self)``` calcule la quantité de phéromone que la fourmi doit déposer sur chaque branche en fonction de la distance totale parcourue. On remet alors la pheromone_map de la fourmi à zéro pour ensuite l'instancier avec la nouvelle quantité de phéromone.
 
 
 
