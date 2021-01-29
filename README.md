@@ -71,7 +71,12 @@ Elle comporte 8 fonctions:
 
 
 ### Résultat
-Pour mieux afficher le chemin le plus court trouvé par les colonies, j'ai ajouté une visualisation sur pygame.
+Pour mieux afficher le chemin le plus court trouvé par les colonies, j'ai ajouté une visualisation sur pygame.  
+
+<p align="center">
+  <img src="result_aco.PNG"></br>
+  <em>Plus court chemin trouvé par la colonie</em>
+</p> 
 
 
 
